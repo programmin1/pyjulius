@@ -19,7 +19,7 @@ from exceptions import ConnectionError
 from models import Sentence
 from pyjulius.exceptions import SendTimeoutError
 from xml.etree.ElementTree import XML, ParseError
-import Queue
+import queue
 import logging
 import re
 import select
@@ -64,7 +64,7 @@ class Client(threading.Thread):
 
     .. attribute:: results
 
-        Results received when listening to the server. This :class:`~Queue.Queue` is filled with
+        Results received when listening to the server. This :class:`~queue.queue` is filled with
         raw xml :class:`~xml.etree.ElementTree.Element` objects and :class:`~pyjulius.models` (if :attr:`modelize`)
 
     .. attribute:: sock
@@ -87,7 +87,7 @@ class Client(threading.Thread):
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.state = DISCONNECTED
         self._stop = False
-        self.results = Queue.Queue()
+        self.results = queue.queue()
         self.modelize = modelize
 
     def stop(self):
