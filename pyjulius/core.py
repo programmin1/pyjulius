@@ -15,9 +15,9 @@
 #
 # You should have received a copy of the GNU Lesser General Public License
 # along with pyjulius.  If not, see <http://www.gnu.org/licenses/>.
-from exceptions import ConnectionError
-from models import Sentence
-from pyjulius.exceptions import SendTimeoutError
+from .exceptions import ConnectionError
+from .models import Sentence
+from .exceptions import SendTimeoutError
 from xml.etree.ElementTree import XML, ParseError
 import queue
 import logging
@@ -87,8 +87,9 @@ class Client(threading.Thread):
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.state = DISCONNECTED
         self._stop = False
-        self.results = queue.queue()
+        self.results = queue.Queue()
         self.modelize = modelize
+        self.socket_file = self.sock.makefile()
 
     def stop(self):
         """Stop the thread"""
@@ -132,11 +133,13 @@ class Client(threading.Thread):
             self.sock.connect((self.host, self.port))
         except socket.error:
             raise ConnectionError()
+
         self.state = CONNECTED
 
     def disconnect(self):
         """Disconnect from the server"""
         logger.info(u'Disconnecting')
+        self.socket_file.close()
         self.sock.shutdown(socket.SHUT_RDWR)
         self.sock.close()
         self.state = DISCONNECTED
@@ -153,26 +156,6 @@ class Client(threading.Thread):
             raise SendTimeoutError()
         writable[0].sendall(command + '\n')
 
-    def _readline(self):
-        """Read a line from the server. Data is read from the socket until a character ``\n`` is found
-
-        :return: the read line
-        :rtype: string
-
-        """
-        line = ''
-        while 1:
-            readable, _, __ = select.select([self.sock], [], [], 0.5)
-            if self._stop:
-                break
-            if not readable:
-                continue
-            data = readable[0].recv(1)
-            if data == '\n':
-                break
-            line += unicode(data, self.encoding)
-        return line
-
     def _readblock(self):
         """Read a block from the server. Lines are read until a character ``.`` is found
 
@@ -182,10 +165,11 @@ class Client(threading.Thread):
         """
         block = ''
         while not self._stop:
-            line = self._readline()
-            if line == '.':
+            line = self.socket_file.readline()
+            if '.' in line and len(line) <= 2:
                 break
             block += line
+
         return block
 
     def _readxml(self):

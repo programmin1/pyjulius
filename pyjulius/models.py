@@ -54,7 +54,7 @@ class Sentence(object):
         return "<Sentence(%.2f, %r)>" % (self.score, self.words)
 
     def __unicode__(self):
-        return u' '.join([unicode(w) for w in self.words])
+        return u' '.join([str(w) for w in self.words])
 
     def __str__(self):
         return str(self.__unicode__())
@@ -90,7 +90,7 @@ class Word(object):
         :param string encoding: encoding of the xml
 
         """
-        word = unicode(xml.get('WORD'), encoding)
+        word = str(xml.get('WORD')).encode(encoding)
         confidence = float(xml.get('CM'))
         return cls(word, confidence)
 
