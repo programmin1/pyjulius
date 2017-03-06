@@ -23,7 +23,6 @@ from xml.etree.ElementTree import XML, ParseError
 import queue
 import logging
 import re
-import select
 import socket
 import threading
 
@@ -139,11 +138,14 @@ class Client(threading.Thread):
 
     def disconnect(self):
         """Disconnect from the server"""
-        logger.info(u'Disconnecting')
-        self.socket_file.close()
+        logger.info(u'Disconnecting...')
+        self.stop()  # send the stop signal
         self.sock.shutdown(socket.SHUT_RDWR)
         self.sock.close()
+#        self.join()  # wait for the thread to die
+        self.socket_file.close()
         self.state = DISCONNECTED
+        logger.info(u'Disconnected')
 
     def send(self, command, timeout=5):
         """Send a command to the server

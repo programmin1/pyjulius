@@ -21,7 +21,7 @@ from xml.etree.ElementTree import Element
 import unittest
 import sys
 sys.path.insert(0, '../')
-import pyjulius
+import pyjulius3
 
 
 class ClientTestCase(unittest.TestCase):

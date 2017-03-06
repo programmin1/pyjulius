@@ -18,7 +18,7 @@
 # You should have received a copy of the Lesser GNU Lesser General Public License
 # along with pyjulius3.  If not, see <http://www.gnu.org/licenses/>.
 from setuptools import setup
-exec(compile(open('pyjulius/infos.py').read(), 'pyjulius/infos.py', 'exec'))
+exec(compile(open('pyjulius3/infos.py').read(), 'pyjulius3/infos.py', 'exec'))
 
 setup(name='pyjulius3',
     version=__version__,
