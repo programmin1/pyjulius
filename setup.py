@@ -1,8 +1,9 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # Copyright (c) 2011-2012 Antoine Bertin <diaoulael@gmail.com>
+# Copyright (c) 2017 Martin Bachmann <bachmmar@gmail.com>
 #
-# This file is part of pyjulius.
+# This file is part of pyjulius3.
 #
 # pyjulius is free software; you can redistribute it and/or modify it under
 # the terms of the Lesser GNU Lesser General Public License as published by
@@ -15,12 +16,11 @@
 # Lesser GNU Lesser General Public License for more details.
 #
 # You should have received a copy of the Lesser GNU Lesser General Public License
-# along with pyjulius.  If not, see <http://www.gnu.org/licenses/>.
+# along with pyjulius3.  If not, see <http://www.gnu.org/licenses/>.
 from setuptools import setup
-execfile('pyjulius/infos.py')
+exec(compile(open('pyjulius/infos.py').read(), 'pyjulius/infos.py', 'exec'))
 
-
-setup(name='pyjulius',
+setup(name='pyjulius3',
     version=__version__,
     license='LGPLv3',
     description='Simple interface to connect to a julius module server',
@@ -30,11 +30,10 @@ setup(name='pyjulius',
         'License :: OSI Approved :: GNU Library or Lesser General Public License (LGPL)',
         'Intended Audience :: Developers',
         'Operating System :: OS Independent',
-        'Programming Language :: Python :: 2.6',
-        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3.5',
         'Topic :: Software Development :: Libraries :: Python Modules'],
     keywords='julius speech recognition',
-    author='Antoine Bertin',
-    author_email='diaoulael@gmail.com',
-    url='https://github.com/Diaoul/pyjulius',
-    packages=['pyjulius'])
+    author='Martin Bachmann',
+    author_email='bachmmar@gmail.com',
+    url='https://github.com/bachmmmar/pyjulius',
+    packages=['pyjulius3'])

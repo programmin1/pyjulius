@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 # Copyright 2011-2012 Antoine Bertin <diaoulael@gmail.com>
+# Copyright 2017 Martin Bachmann <bachmmar@gmail.com>
 #
-# This file is part of pyjulius.
+# This file is part of pyjulius3.
 #
 # pyjulius is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published by
@@ -14,7 +15,7 @@
 # GNU Lesser General Public License for more details.
 #
 # You should have received a copy of the GNU Lesser General Public License
-# along with pyjulius.  If not, see <http://www.gnu.org/licenses/>.
+# along with pyjulius3.  If not, see <http://www.gnu.org/licenses/>.
 from .exceptions import ConnectionError
 from .models import Sentence
 from .exceptions import SendTimeoutError
@@ -89,7 +90,7 @@ class Client(threading.Thread):
         self._stop = False
         self.results = queue.Queue()
         self.modelize = modelize
-        self.socket_file = self.sock.makefile()
+        self.socket_file = self.sock.makefile(mode='r', encoding=self.encoding)
 
     def stop(self):
         """Stop the thread"""
@@ -151,10 +152,7 @@ class Client(threading.Thread):
 
         """
         logger.info(u'Sending %s' % command)
-        _, writable, __ = select.select([], [self.sock], [], timeout)
-        if not writable:
-            raise SendTimeoutError()
-        writable[0].sendall(command + '\n')
+        self.sock.makefile(mode='w').writelines(command)
 
     def _readblock(self):
         """Read a block from the server. Lines are read until a character ``.`` is found

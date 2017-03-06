@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # Copyright 2011-2012 Antoine Bertin <diaoulael@gmail.com>
+# Copyright 2017 Martin Bachmann <bachmmar@gmail.com>
 #
 # This file is part of pyjulius.
 #
@@ -15,9 +16,12 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with pyjulius.  If not, see <http://www.gnu.org/licenses/>.
-from pyjulius.core import Client
+#from pyjulius.core import Client
 from xml.etree.ElementTree import Element
 import unittest
+import sys
+sys.path.insert(0, '../')
+import pyjulius
 
 
 class ClientTestCase(unittest.TestCase):
@@ -25,7 +29,7 @@ class ClientTestCase(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.client = Client()
+        cls.client = pyjulius.Client()
         cls.client.connect()
         cls.client.start()
 

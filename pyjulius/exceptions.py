@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 # Copyright 2011-2012 Antoine Bertin <diaoulael@gmail.com>
+# Copyright 2017 Martin Bachmann <bachmmar@gmail.com>
 #
-# This file is part of pyjulius.
+# This file is part of pyjulius3.
 #
 # pyjulius is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published by
@@ -14,7 +15,7 @@
 # GNU Lesser General Public License for more details.
 #
 # You should have received a copy of the GNU Lesser General Public License
-# along with pyjulius.  If not, see <http://www.gnu.org/licenses/>.
+# along with pyjulius3.  If not, see <http://www.gnu.org/licenses/>.
 __all__ = ['Error', 'ConnectionError', 'SendTimeoutError']
 
 
