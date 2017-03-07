@@ -18,7 +18,6 @@
 # along with pyjulius3.  If not, see <http://www.gnu.org/licenses/>.
 from .exceptions import ConnectionError
 from .models import Sentence
-from .exceptions import SendTimeoutError
 from xml.etree.ElementTree import XML, ParseError
 import queue
 import logging
@@ -139,10 +138,10 @@ class Client(threading.Thread):
     def disconnect(self):
         """Disconnect from the server"""
         logger.info(u'Disconnecting...')
-        self.stop()  # send the stop signal
-        self.sock.shutdown(socket.SHUT_RDWR)
+        self.stop()  # stops the thread
+        self.sock.shutdown(socket.SHUT_RDWR) # enforces the socket file to interrupt reading
         self.sock.close()
-#        self.join()  # wait for the thread to die
+        # self.join()  # wait for the thread to die does not work
         self.socket_file.close()
         self.state = DISCONNECTED
         logger.info(u'Disconnected')
