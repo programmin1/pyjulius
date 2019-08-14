@@ -84,14 +84,14 @@ class Word(object):
         self.confidence = confidence
 
     @classmethod
-    def from_whypo(cls, xml, encoding='utf-8'):
+    def from_whypo(cls, xml):
         """Constructor from xml element *WHYPO*
 
         :param xml.etree.ElementTree xml: the xml *WHYPO* element
         :param string encoding: encoding of the xml
 
         """
-        word = str(xml.get('WORD')).encode(encoding)
+        word = str(xml.get('WORD'))
         confidence = float(xml.get('CM'))
         return cls(word, confidence)
 
